@@ -11,10 +11,10 @@ if __name__ != "__main__":
 
 SH_PATH = "/bin/bash"
 USER_AGENT = "Mozilla/5.0"
-NICKNAME = "XxXxxxXxX"
+NICKNAME = "TAS"
 CAR_STYLE = "AAAAAC13Fv___xMTE2ZmZg"
-TRACK_ID = "95e4bf5c2a76b49ad1ce0f7fd9d6ca777a09aaf6492f9a7415afde3427a8ac66"
-FRAMES = "3282"
+TRACK_ID = ""
+FRAMES = "59999"
 ONLY_VERIFIED = "false"
 
 # Load instructions
@@ -53,9 +53,9 @@ rec += len(wasd["w"]).to_bytes(3, byteorder="little")
 for v in wasd["w"]:
 	rec += v
 
-# Then all A
-rec += len(wasd["a"]).to_bytes(3, byteorder="little")
-for v in wasd["a"]:
+# Then all D
+rec += len(wasd["d"]).to_bytes(3, byteorder="little")
+for v in wasd["d"]:
 	rec += v
 
 # S
@@ -63,9 +63,9 @@ rec += len(wasd["s"]).to_bytes(3, byteorder="little")
 for v in wasd["s"]:
 	rec += v
 
-# D
-rec += len(wasd["d"]).to_bytes(3, byteorder="little")
-for v in wasd["d"]:
+# A
+rec += len(wasd["a"]).to_bytes(3, byteorder="little")
+for v in wasd["a"]:
 	rec += v
 
 # Add three null bytes at the end
