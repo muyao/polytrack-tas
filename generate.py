@@ -1,0 +1,11 @@
+import zlib
+import base64
+
+raw_bytes = b"\x02\x00\x00\xf3\x0d\x00\x69\x03\x00\x02\x00\x00\xef\x05\x00\x57\x00\x00\x04\x00\x00\x00\x00\x00\x41\x00\x00\xa6\x01\x00\x34\x00\x00\x02\x00\x00\x21\x09\x00\x3e\x00\x00\x00\x00\x00"
+
+compressed = zlib.compress(raw_bytes, level=9)
+
+# Convert to Base64
+w14_base64 = base64.b64encode(compressed).decode('utf-8')
+
+print(w14_base64.replace("/", "_").replace("+", "-").replace("=", ""))
