@@ -13,4 +13,4 @@ curl 'https://vps.kodub.com/v6/leaderboard' \
   -H 'sec-ch-ua: "Not;A=Brand";v="8", "Chromium";v="150", "Google Chrome";v="150"' \
   -H 'sec-ch-ua-mobile: ?0' \
   -H 'sec-ch-ua-platform: "macOS"' \
-  --data-raw 'version=0.6.2&userToken=3eedcb160ehj323f72639baf4dasdfbaed0069&nickname=Anonymous&carStyle=AAAAAAoTE2ZmZg&trackId=95e4bf5c2a76b49ad1ce0f7fd9d6ca777a09aaf6492f9a7415afde3427a8ac66&frames=1&recording=eNpjZEAHAQAk&onlyVerified=false' | less
+  --data-raw 'version=0.6.2&userToken=4fd8f07049a4d5fbe32c40892e33cbf2403b8b2e5ea479f8edd90e0fc78de87&nickname=Anonymous&carStyle=AAAAAC13Fv___xMTE2ZmZg&trackId=95e4bf5c2a76b49ad1ce0f7fd9d6ca777a09aaf6492f9a7415afde3427a8ac66&frames=1&recording=eNpjYmD4zMuQyczAxMDwnpUhnIGBhQEEHBkYljEymDCAxBU5GezAggB8WwRG&onlyVerified=false'
