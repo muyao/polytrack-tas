@@ -6,6 +6,9 @@ import subprocess
 import zlib
 from pathlib import Path
 
+if __name__ != "__main__":
+	exit(0)
+
 SH_PATH = "/bin/bash"
 USER_AGENT = "Mozilla/5.0"
 NICKNAME = "XxXxxxXxX"
