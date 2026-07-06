@@ -1,4 +1,6 @@
 #!/bin/bash
+# NOTE
+# Every time, remember to change userToken to something different
 curl 'https://vps.kodub.com/v6/leaderboard' \
   -H 'Accept: */*' \
   -H 'Accept-Language: en-GB,en;q=0.9,de;q=0.8' \
