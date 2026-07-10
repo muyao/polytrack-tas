@@ -1,0 +1,1 @@
+This is the old version of the TAS programme. It uses absolute times, like frame 0 = 0s, frame 500 = 0.5s from start and etc. The new version uses relative times, so delta time. That is easier to modify. For example, if I want to press W one frame later, I don't need to change all the future times as well.
