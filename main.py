@@ -34,11 +34,18 @@ for frame in instructions:
 
 		# If key is not WASD then throw error
 		if k not in wasd:
-			raise Exception(f"Unknown key: {k} in frame {frame}. See {INSTRUCTIONS_NAME}.")
+			raise Exception(f"Unknown key: {k} in frame {frame}.")
+		
+		# Another error
+		if len(wasd[k]) % 2 != 0:
+			raise Exception(f"Cannot press key {k} if {k} is already down in frame {frame}.")
 
 		# Store instruction, convert to little-endian
 		wasd[k].append(int(frame).to_bytes(3, byteorder="little"))
-		wasd[k].append(int(d).to_bytes(3, byteorder="little"))
+
+		# Only add a duration if duration is > 0. Otherwise, duration is infinite
+		if int(d) > 0:
+			wasd[k].append(int(d).to_bytes(3, byteorder="little"))
 
 # First add all W
 rec += len(wasd["w"]).to_bytes(3, byteorder="little")
