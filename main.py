@@ -3,20 +3,11 @@ import json
 import requests
 import secrets
 import zlib
+from config import *
 from pathlib import Path
 
 if __name__ != "__main__":
 	exit(0)
-
-INSTRUCTIONS_NAME = "instructions.json"
-POLYTRACK_VERSION = "0.6.2"
-SH_PATH = "/bin/bash"
-USER_AGENT = "Mozilla/5.0"
-NICKNAME = "TAS"
-CAR_STYLE = "AAAAAC13Fv___xMTE2ZmZg"
-TRACK_ID = "c45242344aa1b592a13a56c872f747a6df32bdc106a23b4f494673a66b33934a"
-FRAMES = "60000"
-ONLY_VERIFIED = "false"
 
 # Load instructions
 with open(Path(__file__).resolve().parent / INSTRUCTIONS_NAME) as f:
