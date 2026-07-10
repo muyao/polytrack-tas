@@ -1,6 +1,9 @@
 # Name that will show up in leaderboards
 NICKNAME = "TAS"
 
+# Whether it should do a random nickname. If set to true, overrides nickname
+RANDOMISE_NICKNAME = True
+
 # Track id
 TRACK_ID = ""
 
