@@ -13,6 +13,9 @@ CAR_STYLE = ""
 # File name of the instructions json
 INSTRUCTIONS_NAME = "instructions.json"
 
+# Recording to decode using decode.py
+DECODE_RECORDING = "eNpjZAABJgaGPUwML5hBjHdMDNvAjBQGhgmMIFkATW4ETw"
+
 # User agent for requests
 USER_AGENT = "Mozilla/5.0"
 
