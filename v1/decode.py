@@ -7,9 +7,6 @@ from pathlib import Path
 if __name__ != "__main__":
 	exit(0)
 
-# TODO:
-# Make code DRY
-
 # Add padding
 rec = DECODE_RECORDING + "=" * (-len(DECODE_RECORDING) % 4)
 
