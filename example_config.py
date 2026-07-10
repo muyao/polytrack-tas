@@ -8,7 +8,7 @@ TRACK_ID = ""
 FRAMES = "60000"
 
 # Car style
-CAR_STYLE = ""
+CAR_STYLE = "AAUAAAAAAAAAAP8A_wAAAA"
 
 # File name of the instructions json
 INSTRUCTIONS_NAME = "instructions.json"
