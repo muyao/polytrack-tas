@@ -26,6 +26,10 @@ for k in ["w", "d", "s", "a", "r"]:
 	# For each action
 	for action in channel:
 
+		# Comments
+		if action.startswith(":"):
+			continue
+
 		# Split xxx-yyy into [xxx, yyy]
 		action_pair = action.split("-")
 
