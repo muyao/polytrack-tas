@@ -1,24 +1,25 @@
 import base64
 import json
-import os
+import requests
 import secrets
-import subprocess
 import zlib
 from pathlib import Path
 
 if __name__ != "__main__":
 	exit(0)
 
+INSTRUCTIONS_NAME = "instructions.json"
+POLYTRACK_VERSION = "0.6.2"
 SH_PATH = "/bin/bash"
 USER_AGENT = "Mozilla/5.0"
 NICKNAME = "TAS"
 CAR_STYLE = "AAAAAC13Fv___xMTE2ZmZg"
-TRACK_ID = ""
-FRAMES = "59999"
+TRACK_ID = "c45242344aa1b592a13a56c872f747a6df32bdc106a23b4f494673a66b33934a"
+FRAMES = "60000"
 ONLY_VERIFIED = "false"
 
 # Load instructions
-with open(Path(__file__).resolve().parent / "instructions.json") as f:
+with open(Path(__file__).resolve().parent / INSTRUCTIONS_NAME) as f:
 	instructions = json.load(f)
 
 # Temporary storage
@@ -42,7 +43,7 @@ for frame in instructions:
 
 		# If key is not WASD then throw error
 		if k not in wasd:
-			raise Exception(f"Unknown key: {k} in frame {frame}. See instructions.json.")
+			raise Exception(f"Unknown key: {k} in frame {frame}. See {INSTRUCTIONS_NAME}.")
 
 		# Store instruction, convert to little-endian
 		wasd[k].append(int(frame).to_bytes(3, byteorder="little"))
@@ -75,33 +76,27 @@ rec += b"\x00\x00\x00"
 rec = zlib.compress(rec, level=9)
 
 # Convert to Base64
-rec = base64.b64encode(rec).decode('utf-8')
+rec = base64.b64encode(rec).decode("utf-8")
 
 # Polytrack uses - and _ instead of + and /
 rec = rec.replace("+", "-").replace("/", "_").replace("=", "")
 
-# Generate the shellscript
-with open("/tmp/polyhax.post.sh", "w") as f:
-	f.write(f"#!{SH_PATH}\n")
-	f.write("curl 'https://vps.kodub.com/v6/leaderboard' ")
-	f.write("-H 'Content-Type: application/x-www-form-urlencoded' ")
-	f.write("-H 'Origin: https://app-polytrack.kodub.com' ")
-	f.write("-H 'Referer: https://app-polytrack.kodub.com/' ")
-	f.write(f"-H 'User-Agent: {USER_AGENT}' ")
-	f.write("--data-raw 'version=0.6.2&")
-	f.write(f"userToken={secrets.token_hex(32)}&")
-	f.write(f"nickname={NICKNAME}&")
-	f.write(f"carStyle={CAR_STYLE}&")
-	f.write(f"trackId={TRACK_ID}&")
-	f.write(f"frames={FRAMES}&")
-	f.write(f"recording={rec}&")
-	f.write(f"onlyVerified={ONLY_VERIFIED}'")
-
-# Give file execution permissions
-os.chmod("/tmp/polyhax.post.sh", 0o744)
-
-# Execute shellscript
-subprocess.run(["/tmp/polyhax.post.sh"])
-
-# Clean up
-os.remove("/tmp/polyhax.post.sh")
+print(requests.post(
+	"https://vps.kodub.com/v6/leaderboard",
+	headers={
+		"Content-Type": "application/x-www-form-urlencoded",
+		"Origin": "https://app-polytrack.kodub.com",
+		"Referer": "https://app-polytrack.kodub.com/",
+		"User-Agent": USER_AGENT
+	},
+	data={
+		"version": POLYTRACK_VERSION,
+		"userToken": secrets.token_hex(32),
+		"nickname": NICKNAME,
+		"carStyle": CAR_STYLE,
+		"trackId": TRACK_ID,
+		"frames": FRAMES,
+		"recording": rec,
+		"onlyVerified": ONLY_VERIFIED
+	}
+).text)
