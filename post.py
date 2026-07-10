@@ -56,6 +56,11 @@ rec = base64.urlsafe_b64encode(rec).decode("utf-8")
 # Remove the padding
 rec = rec.rstrip("=")
 
+if RANDOMISE_NICKNAME:
+	nickname = secrets.token_hex(16)
+else:
+	nickname = NICKNAME
+
 print(
 	requests.post(
 		"https://vps.kodub.com/v6/leaderboard",
@@ -68,7 +73,7 @@ print(
 		data={
 			"version": POLYTRACK_VERSION,
 			"userToken": secrets.token_hex(32),
-			"nickname": NICKNAME,
+			"nickname": nickname,
 			"carStyle": CAR_STYLE,
 			"trackId": TRACK_ID,
 			"frames": FRAMES,
