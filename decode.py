@@ -29,12 +29,12 @@ instructions = {
 		"a": None,
 		"s": None,
 		"d": None,
-		"reset": None
+		"r": None
 	}
 }
 
 # Iterate through all channels
-for k in ["w", "d", "s", "a", "reset"]:
+for k in ["w", "d", "s", "a", "r"]:
 
 	# Take the slice for the channel and delete
 	actions = rec[1 : int(rec[0]) + 1]
