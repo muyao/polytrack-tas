@@ -18,10 +18,20 @@ wasd = {
 	"w": [],
 	"a": [],
 	"s": [],
-	"d": []
+	"d": [],
+	"reset": []
 }
 
-# Recording. Will get appended from wasd in order W, A, S, D
+# For converting absolute times to DT
+prev = {
+	"w": 0,
+	"a": 0,
+	"s": 0,
+	"d": 0,
+	"reset": 0
+}
+
+# Recording. Will get appended from wasd in order W, A, S, D, Reset
 rec = b""
 
 # Iterate through each frame (Frame as in one screen refresh)
@@ -35,17 +45,16 @@ for frame in instructions:
 		# If key is not WASD then throw error
 		if k not in wasd:
 			raise Exception(f"Unknown key: {k} in frame {frame}.")
-		
-		# Another error
-		if len(wasd[k]) % 2 != 0:
-			raise Exception(f"Cannot press key {k} if {k} is already down in frame {frame}.")
 
 		# Store instruction, convert to little-endian
-		wasd[k].append(int(frame).to_bytes(3, byteorder="little"))
+		wasd[k].append((int(frame) - prev[k]).to_bytes(3, byteorder="little"))
 
 		# Only add a duration if duration is > 0. Otherwise, duration is infinite
-		if int(d) > 0:
+		if int(d) >= 0:
 			wasd[k].append(int(d).to_bytes(3, byteorder="little"))
+		
+		# Set previous
+		prev[k] = int(frame) + d
 
 # First add all W
 rec += len(wasd["w"]).to_bytes(3, byteorder="little")
@@ -67,17 +76,19 @@ rec += len(wasd["a"]).to_bytes(3, byteorder="little")
 for v in wasd["a"]:
 	rec += v
 
-# Add three null bytes at the end
-rec += b"\x00\x00\x00"
+# Reset
+rec += len(wasd["reset"]).to_bytes(3, byteorder="little")
+for v in wasd["reset"]:
+	rec += v
 
 # Compress with zlib
 rec = zlib.compress(rec, level=9)
 
 # Convert to Base64
-rec = base64.b64encode(rec).decode("utf-8")
+rec = base64.urlsafe_b64encode(rec).decode("utf-8")
 
-# Polytrack uses - and _ instead of + and /
-rec = rec.replace("+", "-").replace("/", "_").replace("=", "")
+# Remove the padding
+rec = rec.rstrip("=")
 
 print(requests.post(
 	"https://vps.kodub.com/v6/leaderboard",
