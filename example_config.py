@@ -1,3 +1,5 @@
+# Rename this to config.py to use it
+
 # Name that will show up in leaderboards
 NICKNAME = "TAS"
 
