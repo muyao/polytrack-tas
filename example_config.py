@@ -11,7 +11,7 @@ TRACK_ID = ""
 FRAMES = "60000"
 
 # How precise auto values are. Higher values risk being 429ed
-AUTO_AMOUNT = 8
+AUTO_AMOUNT = 4
 
 # Car style
 CAR_STYLE = "AAUAAAAAAAAAAP8A_wAAAA"
