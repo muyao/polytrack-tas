@@ -33,6 +33,18 @@ for k in ["w", "d", "s", "a", "r"]:
 		# Split xxx-yyy into [xxx, yyy]
 		action_pair = action.split("-")
 
+		# For spam macros, like !900-45-45-10
+		if action.startswith("!"):
+
+			# Repeat last bit times
+			for s in range(int(action_pair[3])):
+
+				# Add DTs to actions
+				actions.append(action_pair[1])
+				actions.append(action_pair[2])
+				
+			continue
+
 		# Concat to actions
 		actions += action_pair
 
