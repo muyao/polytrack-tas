@@ -129,6 +129,10 @@ def find_auto(instructions):
 			if "@" not in action:
 				continue
 
+			# Skip comments
+			if action.startswith(":"):
+				continue
+
 			# Error
 			if "." not in action:
 				raise Exception()
