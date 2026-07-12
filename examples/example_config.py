@@ -10,10 +10,10 @@ RANDOMISE_NICKNAME = True
 TRACK_ID = ""
 
 # Length of the recording. 1000 frames is one second
-FRAMES = "60000"
+FRAMES = ""
 
 # How precise auto values are. Higher values risk being 429ed
-AUTO_AMOUNT = 4
+AUTO_AMOUNT = 3
 
 # Car style
 CAR_STYLE = "AAUAAAAAAAAAAP8A_wAAAA"
