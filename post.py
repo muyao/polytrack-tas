@@ -152,7 +152,7 @@ auto_found = find_auto(instrv2)
 
 # If there is no automatic, just post once
 if not auto_found:
-	post(instrv2, None, None)
+	post(instrv2, None)
 	exit(0)
 
 # Otherwise, repeat AUTO_AMOUNT with t starting at 0, ending at 1
