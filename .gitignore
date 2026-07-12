@@ -3,5 +3,6 @@ venv/
 
 .DS_Store
 *.pyc
+
 instructions.json
 config.py
