@@ -12,7 +12,7 @@ if __name__ != "__main__":
 	exit(0)
 
 # Pack everything into a function, for autos that will post multiple times
-def post(instructions, auto_k, auto_idx, t):
+def post(instructions, t):
 
 	# Will be the output
 	rec = []
@@ -137,25 +137,25 @@ def find_auto(instructions):
 			if "." not in action:
 				raise Exception()
 
-			# Return tuple of channel and index if found			
-			return [True, k, idx]
+			# Return True if an automatic is found 
+			return True
 	
-	# Otherwise, return false
-	return [False]
+	# Otherwise, return False
+	return False
 
 # Load instructions
 with open(Path(__file__).resolve().parent / INSTRUCTIONS_NAME) as f:
 	instrv2 = json.load(f)["instructions_v2"]
 
 # Location of automatic
-auto_loc = find_auto(instrv2)
+auto_found = find_auto(instrv2)
 
 # If there is no automatic, just post once
-if not auto_loc[0]:
-	post(instrv2, None, None, None)
+if not auto_found:
+	post(instrv2, None, None)
 	exit(0)
 
 # Otherwise, repeat AUTO_AMOUNT with t starting at 0, ending at 1
 for t in range(AUTO_AMOUNT):
-	post(instrv2, auto_loc[1], auto_loc[2], t / (AUTO_AMOUNT - 1))
+	post(instrv2, t / (AUTO_AMOUNT - 1))
 	time.sleep(1)
