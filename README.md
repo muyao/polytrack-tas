@@ -4,7 +4,7 @@
 
 * **Post recordings directly to PolyTrack:** By running `post.py`, it converts your run to a PolyTrack recording and uploads to the leaderboards.
 
-* **Fully configurable:** By changing `config.py`, you can change the car's style, the nickname and more.
+* **Fully customisable:** By changing `config.py`, you can change the car's style, the nickname and more.
 
 * **Decode recordings to JSON:** By running `deode.py`, you can convert the recording specified inside `config.py` back to a JSON
 
@@ -138,6 +138,6 @@ Distributed under the GPLv3 License. See `LICENSE` for more information.
 
 ---
 
-*v2.2.3*
+*v2.2.5*
 
-*Sat, 11 Jul 2026 14:37:03 GMT*
+*Sun, 12 Jul 2026 13:18:22 GMT*
