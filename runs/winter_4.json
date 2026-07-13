@@ -1,10 +1,14 @@
 {
 	"instructions_v2": {
 		"w": [
+			": start phase 1 at 0",
 			"0"
 		],
 		"a": [
-			"!0-45-45-6"
+			": start phase 1 at 0",
+			"!0-45-45-6",
+			"!2000-45-66-25",
+			": end phase 1 at frame 5225"
 		],
 		"s": [],
 		"d": [],
