@@ -11,6 +11,7 @@
 ## Requirements
 
 * See `requirements.txt`
+* `pip install pyperclip`
 * `pip install requests`
 
 ## Installation
@@ -27,6 +28,7 @@
 
 3. **Install requirement:**
    ```bash
+   pip install pyperclip
    pip install requests
    ```
 
@@ -113,6 +115,8 @@
 
 * `NICKNAME`: The nickname that will show up in the leaderboards
 * `RANDOMISE_NICKNAME`: If set to `True`, will turn nickname into random gibberish
+* `USER_TOKEN`: Who you are
+* `RANDOMISE_USER_TOKEN`: If set to `True`, will anonymise you
 * `TRACK_ID`: The ID of the track
 * `FRAMES`: The length that will be uploaded. 1000 frames is 1 second.
 * `AUTO_AMOUNT`: How many requests `@` will send.
@@ -138,6 +142,6 @@ Distributed under the GPLv3 License. See `LICENSE` for more information.
 
 ---
 
-*v2.2.5*
+*v2.3.0*
 
-*Sun, 12 Jul 2026 13:18:22 GMT*
+*Mon, 13 Jul 2026 10:29:11 GMT*
