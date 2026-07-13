@@ -6,6 +6,12 @@ NICKNAME = "TAS"
 # Whether it should do a random nickname. If set to true, overrides nickname
 RANDOMISE_NICKNAME = True
 
+# User token
+USER_TOKEN = ""
+
+# Whether it should randomise user token. If set to true, overrides userToken
+RANDOMISE_USER_TOKEN = True
+
 # Track id
 TRACK_ID = ""
 
