@@ -142,6 +142,6 @@ Distributed under the GPLv3 License. See `LICENSE` for more information.
 
 ---
 
-*v2.3.0*
+*v2.3.1*
 
-*Mon, 13 Jul 2026 10:29:11 GMT*
+*Mon, 13 Jul 2026 10:35:04 GMT*
