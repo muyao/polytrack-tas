@@ -15,9 +15,6 @@ RANDOMISE_USER_TOKEN = True
 # Whether you are currently testing. If set to True, doesn't post to leaderboards
 IS_TESTING = True
 
-# Track name
-TRACK_NAME = ""
-
 # Track id
 TRACK_ID = ""
 
