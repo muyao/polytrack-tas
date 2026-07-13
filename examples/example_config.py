@@ -28,7 +28,7 @@ FRAMES = ""
 AUTO_AMOUNT = 3
 
 # Car style
-CAR_STYLE = "AAUAAAAAAAAAAP8A_wAAAA"
+CAR_STYLE = ""
 
 # File name of the instructions json
 INSTRUCTIONS_NAME = "instructions.json"
