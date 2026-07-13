@@ -1,5 +1,6 @@
 import base64
 import json
+import pyperclip
 import requests
 import secrets
 import time
@@ -88,10 +89,25 @@ def post(instructions, t):
 	# Remove the padding
 	rec = rec.rstrip("=")
 
+	# User token
+	if RANDOMISE_USER_TOKEN:
+		user_token = secrets.token_hex(32)
+	else:
+		user_token = USER_TOKEN
+
+	# Nickname
 	if RANDOMISE_NICKNAME:
 		nickname = secrets.token_hex(16)
 	else:
 		nickname = NICKNAME
+
+	print(rec)
+
+	pyperclip.copy(rec)
+
+	# Don't post if IS_TESTING	
+	if IS_TESTING:
+		return
 
 	print(
 		requests.post(
@@ -104,7 +120,7 @@ def post(instructions, t):
 			},
 			data={
 				"version": POLYTRACK_VERSION,
-				"userToken": secrets.token_hex(32),
+				"userToken": user_token,
 				"nickname": nickname,
 				"carStyle": CAR_STYLE,
 				"trackId": TRACK_ID,
