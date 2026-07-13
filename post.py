@@ -174,4 +174,10 @@ if not auto_found:
 # Otherwise, repeat AUTO_AMOUNT with t starting at 0, ending at 1
 for t in range(AUTO_AMOUNT):
 	post(instrv2, t / (AUTO_AMOUNT - 1))
+
+	# Skip wait if is testing, can't be 429ed
+	if IS_TESTING:
+		continue
+
+	# Wait 1s to avoid rate limit
 	time.sleep(1)
