@@ -12,6 +12,9 @@ USER_TOKEN = ""
 # Whether it should randomise user token. If set to true, overrides userToken
 RANDOMISE_USER_TOKEN = True
 
+# Whether you are currently testing. If set to True, doesn't post to leaderboards
+IS_TESTING = True
+
 # Track id
 TRACK_ID = ""
 
