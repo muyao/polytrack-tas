@@ -15,6 +15,9 @@ RANDOMISE_USER_TOKEN = True
 # Whether you are currently testing. If set to True, doesn't post to leaderboards
 IS_TESTING = True
 
+# Recording key of local storage
+LOCALSTORAGE_KEY = ""
+
 # Track id
 TRACK_ID = ""
 
