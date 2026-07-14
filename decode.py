@@ -7,13 +7,9 @@ from pathlib import Path
 if __name__ != "__main__":
 	exit(0)
 
-# Add padding
+# Add padding, decode base64, decompress
 rec = DECODE_RECORDING + "=" * (-len(DECODE_RECORDING) % 4)
-
-# Decode base64
 rec = base64.urlsafe_b64decode(rec)
-
-# Decompress with zlib
 rec = zlib.decompress(rec)
 
 # Turn rec into a list. 3 bytes per group

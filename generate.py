@@ -12,9 +12,9 @@ from pathlib import Path
 if __name__ != "__main__":
 	exit(0)
 
-# Pack everything into a function because automatics (@xxx.yyy) will post
+# Pack everything into a function because automatics (@xxx.yyy) will generate
 # multiple times
-def post(instructions, t):
+def generate(instructions, t):
 
 	# Will be the output
 	rec = []
@@ -36,7 +36,7 @@ def post(instructions, t):
 			# Split xxx-yyy into [xxx, yyy]
 			action_pair = action.split("-")
 
-			# Auto
+			# Automatics
 			if "@" in action:
 
 				# Only for the segment with @ in it
@@ -47,14 +47,13 @@ def post(instructions, t):
 						continue
 
 					# For segments with @
-					# @800.1000 -> min_max = ["800", "1000"]
+					# Example: @800.1000 -> min_max = ["800", "1000"]
 					min_max = ac_sing_p.replace("@", "").replace("!", "")
 					min_max = min_max.split(".")
 
-					# Interpolates from min to max. t=0, min. t=1, max
+					# Interpolate from min to max. t=0, min. t=1, max, then
+					# round and stringify
 					interpolated = lerp(int(min_max[0]), int(min_max[1]), t)
-					
-					# Round value to integer and stringify it
 					action_pair[idx] = str(round(interpolated))
 
 			# For simple key presses
@@ -63,45 +62,36 @@ def post(instructions, t):
 				# Concat to actions
 				actions += action_pair
 
-				# Skip spam macro bit
 				continue
 
-			# Otherwise if it is a spam macro like !900-45-45-20
+			# Otherwise if it is a spam macro like !900-45-50-20
 			# Repeat in example above 20 times, in other examples the number at
 			# the end
 			for s in range(int(action_pair[3])):
 
-				# Add DTs to actions
+				# Add DTs and durations to actions
+				# If it is the first iteration, use (in the example above) 900 
+				# instead of 45. Otherwise, use 45
 				if s == 0:
 					actions.append(action_pair[0].replace("!", ""))
 				else:
 					actions.append(action_pair[1])
-
-				# Add durations to actions
 				actions.append(action_pair[2])
 
 		# Append to output
 		rec.append(len(actions))
 		rec += actions
 
-	# Intify rec
+	# Intify, binarify, stringify
 	rec = [int(i) for i in rec]
-
-	# Bytify rec
 	rec = [i.to_bytes(3, byteorder="little") for i in rec]
-
-	# Turn rec into string (rec_s)
 	rec_s = b""
 	for btr in rec:
 		rec_s += btr
 
-	# Compress with zlib
+	# Compress with zlib, convert to base64, remove padding
 	rec = zlib.compress(rec_s, level=9)
-
-	# Convert to Base64
 	rec = base64.urlsafe_b64encode(rec).decode("utf-8")
-
-	# Remove the padding
 	rec = rec.rstrip("=")
 
 	# User token
@@ -157,50 +147,19 @@ def post(instructions, t):
 		).text
 	)
 
-# Find location of automatics
-def automatics_exist(instructions):
-
-	# For each channel
-	for k in ["w", "d", "s", "a", "r"]:
-		channel = instructions[k]
-
-		# For each action
-		for idx, action in enumerate(channel):
-
-			# Skip if @ not found
-			if "@" not in action:
-				continue
-
-			# Skip comments
-			if action.startswith(":"):
-				continue
-
-			# Error
-			if "." not in action:
-				raise Exception()
-
-			# Return True if an automatic is found 
-			return True
-	
-	# Otherwise, return False
-	return False
-
 # Load instructions
 with open(Path(__file__).resolve().parent / INSTRUCTIONS_NAME) as f:
 	instrv2 = json.load(f)["instructions_v2"]
 
 # If there is no automatic, just post once
 if not automatics_exist(instrv2):
-	post(instrv2, None)
+	generate(instrv2, None)
 	exit(0)
 
 # Otherwise, repeat AUTO_AMOUNT with t starting at 0, ending at 1
 for t in range(AUTO_AMOUNT):
-	post(instrv2, t / (AUTO_AMOUNT - 1))
+	generate(instrv2, t / (AUTO_AMOUNT - 1))
 
-	# Skip wait 1s if is testing since it's only local
-	if IS_TESTING:
-		continue
-
-	# Wait 1s to avoid rate limit
-	time.sleep(1)
+	# Only wait 1s if not testing
+	if not IS_TESTING:
+		time.sleep(1)
