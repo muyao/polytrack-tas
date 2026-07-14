@@ -101,9 +101,22 @@ def post(instructions, t):
 	else:
 		nickname = NICKNAME
 
+	# Print recording
 	print(rec)
 
-	pyperclip.copy(rec)
+	# Generate Javascript to paste into console
+	js = f"""
+	(
+		(
+			r = JSON.parse(localStorage.getItem(\"{LOCALSTORAGE_KEY}\"))
+		) => {{
+			r.recording = \"{rec}\";
+			localStorage.setItem(\"{LOCALSTORAGE_KEY}\", JSON.stringify(r))
+		}}
+	)()
+	"""
+	# Ignore the abomination above
+	pyperclip.copy(js.replace(" ", "").replace("\t", "").replace("\n", ""))
 
 	# Don't post if IS_TESTING	
 	if IS_TESTING:
