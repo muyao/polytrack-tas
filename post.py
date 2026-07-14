@@ -12,7 +12,8 @@ from pathlib import Path
 if __name__ != "__main__":
 	exit(0)
 
-# Pack everything into a function, for autos that will post multiple times
+# Pack everything into a function because automatics (@xxx.yyy) will post
+# multiple times
 def post(instructions, t):
 
 	# Will be the output
@@ -157,7 +158,7 @@ def post(instructions, t):
 	)
 
 # Find location of automatics
-def do_autos_exist(instructions):
+def automatics_exist(instructions):
 
 	# For each channel
 	for k in ["w", "d", "s", "a", "r"]:
@@ -189,7 +190,7 @@ with open(Path(__file__).resolve().parent / INSTRUCTIONS_NAME) as f:
 	instrv2 = json.load(f)["instructions_v2"]
 
 # If there is no automatic, just post once
-if not do_autos_exist(instrv2):
+if not automatics_exist(instrv2):
 	post(instrv2, None)
 	exit(0)
 
