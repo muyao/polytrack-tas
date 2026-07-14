@@ -28,7 +28,7 @@ def post(instructions, t):
 		# For each action
 		for action in channel:
 
-			# Comments
+			# Skip comments
 			if action.startswith(":"):
 				continue
 
@@ -38,43 +38,48 @@ def post(instructions, t):
 			# Auto
 			if "@" in action:
 
-				# Only for the one with @ in it
+				# Only for the segment with @ in it
 				for idx, ac_sing_p in enumerate(action_pair):
+
+					# Skip segments without @
 					if "@" not in ac_sing_p:
 						continue
 
+					# For segments with @
 					# @800.1000 -> min_max = ["800", "1000"]
 					min_max = ac_sing_p.replace("@", "").replace("!", "")
 					min_max = min_max.split(".")
-					action_pair[idx] = str(
-						round(
-							lerp(
-								int(min_max[0]),
-								int(min_max[1]),
-								t
-							)
-						)
-					)
 
-			# For spam macros, like !900-45-45-10
-			if action.startswith("!"):
+					# Interpolates from min to max. t=0, min. t=1, max
+					interpolated = lerp(int(min_max[0]), int(min_max[1]), t)
+					
+					# Round value to integer and stringify it
+					action_pair[idx] = str(round(interpolated))
 
-				# Repeat last bit times
-				for s in range(int(action_pair[3])):
+			# For simple key presses
+			if not action.startswith("!"):
+				
+				# Concat to actions
+				actions += action_pair
 
-					# Add DTs to actions
-					if s == 0:
-						actions.append(action_pair[0].replace("!", ""))
-					else:
-						actions.append(action_pair[1])
-					actions.append(action_pair[2])
-
+				# Skip spam macro bit
 				continue
 
-			# Concat to actions
-			actions += action_pair
+			# Otherwise if it is a spam macro like !900-45-45-20
+			# Repeat in example above 20 times, in other examples the number at
+			# the end
+			for s in range(int(action_pair[3])):
 
-		# Add to output
+				# Add DTs to actions
+				if s == 0:
+					actions.append(action_pair[0].replace("!", ""))
+				else:
+					actions.append(action_pair[1])
+
+				# Add durations to actions
+				actions.append(action_pair[2])
+
+		# Append to output
 		rec.append(len(actions))
 		rec += actions
 
@@ -121,13 +126,14 @@ def post(instructions, t):
 		f" track first.\"}}r.recording=\"{rec}\";localStorage.setItem(\""
 		f"{LOCALSTORAGE_KEY}\",JSON.stringify(r));return localStorage}})()"
 	)
-	# Ignore the abomination above
+	# Copy abomination above to clipboard
 	pyperclip.copy(js)
 
 	# Don't post if IS_TESTING	
 	if IS_TESTING:
 		return
 
+	# Otherwise, post to leaderboards
 	print(
 		requests.post(
 			"https://vps.kodub.com/v6/leaderboard",
@@ -150,8 +156,8 @@ def post(instructions, t):
 		).text
 	)
 
-# Find location of auto
-def find_auto(instructions):
+# Find location of automatics
+def do_autos_exist(instructions):
 
 	# For each channel
 	for k in ["w", "d", "s", "a", "r"]:
@@ -160,7 +166,7 @@ def find_auto(instructions):
 		# For each action
 		for idx, action in enumerate(channel):
 
-			# Skip to next iteration if @ not found
+			# Skip if @ not found
 			if "@" not in action:
 				continue
 
@@ -182,11 +188,8 @@ def find_auto(instructions):
 with open(Path(__file__).resolve().parent / INSTRUCTIONS_NAME) as f:
 	instrv2 = json.load(f)["instructions_v2"]
 
-# Location of automatic
-auto_found = find_auto(instrv2)
-
 # If there is no automatic, just post once
-if not auto_found:
+if not do_autos_exist(instrv2):
 	post(instrv2, None)
 	exit(0)
 
@@ -194,7 +197,7 @@ if not auto_found:
 for t in range(AUTO_AMOUNT):
 	post(instrv2, t / (AUTO_AMOUNT - 1))
 
-	# Skip wait if is testing, can't be 429ed
+	# Skip wait 1s if is testing since it's only local
 	if IS_TESTING:
 		continue
 
