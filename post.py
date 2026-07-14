@@ -115,7 +115,11 @@ def post(instructions, t):
 
 	# Generate Javascript to paste into console
 	js = (
-		f"((r=JSON.parse(localStorage.getItem(\"{LOCALSTORAGE_KEY}\")))=>{{if(r===null){{return \"Go to https://app-polytrack.kodub.com/{POLYTRACK_VERSION}/!\"}}r.recording=\"{rec}\";localStorage.setItem(\"{LOCALSTORAGE_KEY}\",JSON.stringify(r));return localStorage}})()"
+		f"((r=JSON.parse(localStorage.getItem(\"{LOCALSTORAGE_KEY}\")))=>{{if("
+		f"r===null){{return \"Go to https://app-polytrack.kodub.com/"
+		f"{POLYTRACK_VERSION}/! If you already are there, set a record on that"
+		f" track first.\"}}r.recording=\"{rec}\";localStorage.setItem(\""
+		f"{LOCALSTORAGE_KEY}\",JSON.stringify(r));return localStorage}})()"
 	)
 	# Ignore the abomination above
 	pyperclip.copy(js)
