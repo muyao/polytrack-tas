@@ -2,7 +2,7 @@
 
 ## Features
 
-* **Post recordings directly to PolyTrack:** By running `generate.py`, it converts your run to a PolyTrack recording and uploads to the leaderboards.
+* **Post recordings directly to PolyTrack:** By running `generate.py`, it converts your run to a PolyTrack recording and copies a generated Javascript which you can paste into the console to quickly change `localStorage`.
 
 * **Fully customisable:** By changing `config.py`, you can change the car's style, the nickname and more.
 
@@ -103,7 +103,7 @@
        "@200.400-250"
    ]
    ```
-   This tests 4 values between 200 and 400 (200, 267, 333, 400) and sends 4 recordings to the leaderboards. You can then manually review them and check which one is the fastest.
+   This tests 4 values between 200 and 400 (200, 267, 333, 400) and prints 4 recordings, copies javascript of last recording to clipboard
 
 4. Run `generate.py`
 
@@ -117,6 +117,7 @@
 * `RANDOMISE_NICKNAME`: If set to `True`, will turn nickname into random gibberish
 * `USER_TOKEN`: Who you are
 * `RANDOMISE_USER_TOKEN`: If set to `True`, will anonymise you
+* `IS_TESTING`: Leave this to `True` unless you're done testing. If False, posts recording to leaderboards.
 * `TRACK_ID`: The ID of the track
 * `FRAMES`: The length that will be uploaded. 1000 frames is 1 second.
 * `AUTO_AMOUNT`: How many requests `@` will send.
@@ -142,6 +143,6 @@ Distributed under the GPLv3 License. See `LICENSE` for more information.
 
 ---
 
-*v2.4.4*
+*v2.4.5*
 
-*Tue, 14 Jul 2026 09:34:56 GMT*
+*Tue, 14 Jul 2026 13:22:45 GMT*
