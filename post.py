@@ -111,7 +111,8 @@ def post(instructions, t):
 			r = JSON.parse(localStorage.getItem(\"{LOCALSTORAGE_KEY}\"))
 		) => {{
 			r.recording = \"{rec}\";
-			localStorage.setItem(\"{LOCALSTORAGE_KEY}\", JSON.stringify(r))
+			localStorage.setItem(\"{LOCALSTORAGE_KEY}\", JSON.stringify(r));
+			return localStorage
 		}}
 	)()
 	"""
