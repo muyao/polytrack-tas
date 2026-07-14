@@ -44,8 +44,17 @@ def post(instructions, t):
 						continue
 
 					# @800.1000 -> min_max = ["800", "1000"]
-					min_max = ac_sing_p.replace("@", "").replace("!", "").split(".")
-					action_pair[idx] = str(round(lerp(int(min_max[0]), int(min_max[1]), t)))
+					min_max = ac_sing_p.replace("@", "").replace("!", "")
+					min_max = min_max.split(".")
+					action_pair[idx] = str(
+						round(
+							lerp(
+								int(min_max[0]),
+								int(min_max[1]),
+								t
+							)
+						)
+					)
 
 			# For spam macros, like !900-45-45-10
 			if action.startswith("!"):
@@ -105,19 +114,13 @@ def post(instructions, t):
 	print(rec)
 
 	# Generate Javascript to paste into console
-	js = f"""
-	(
-		(
-			r = JSON.parse(localStorage.getItem(\"{LOCALSTORAGE_KEY}\"))
-		) => {{
-			r.recording = \"{rec}\";
-			localStorage.setItem(\"{LOCALSTORAGE_KEY}\", JSON.stringify(r));
-			return localStorage
-		}}
-	)()
-	"""
+	js = (
+		f"((r=JSON.parse(localStorage.getItem(\"{LOCALSTORAGE_KEY}\")))=>{{r.r"
+		f"ecording=\"{rec}\";localStorage.setItem(\"{LOCALSTORAGE_KEY}\",JSON."
+		f"stringify(r));return localStorage}})()"
+	)
 	# Ignore the abomination above
-	pyperclip.copy(js.replace(" ", "").replace("\t", "").replace("\n", ""))
+	pyperclip.copy(js)
 
 	# Don't post if IS_TESTING	
 	if IS_TESTING:
