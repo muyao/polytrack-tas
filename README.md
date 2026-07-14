@@ -2,7 +2,7 @@
 
 ## Features
 
-* **Post recordings directly to PolyTrack:** By running `post.py`, it converts your run to a PolyTrack recording and uploads to the leaderboards.
+* **Post recordings directly to PolyTrack:** By running `generate.py`, it converts your run to a PolyTrack recording and uploads to the leaderboards.
 
 * **Fully customisable:** By changing `config.py`, you can change the car's style, the nickname and more.
 
@@ -105,7 +105,7 @@
    ```
    This tests 4 values between 200 and 400 (200, 267, 333, 400) and sends 4 recordings to the leaderboards. You can then manually review them and check which one is the fastest.
 
-4. Run `post.py`
+4. Run `generate.py`
 
 ### Decoding
 
@@ -123,7 +123,7 @@
 * `CAR_STYLE`: The car's style
 * `INSTRUCTIONS_NAME`: The file name of the instruction json.
 * `DECODE_RECORDING`: The recording that you want to decode using `decode.py`
-* `USER_AGENT`: The header for the post request when running `post.py`
+* `USER_AGENT`: The header for the post request when running `generate.py`
 * `ONLY_VERIFIED`: I actually don't know myself what this does. Just leave this in `false`. If it doesn't work, do `true`
 * `POLYTRACK_VERSION`: The version of PolyTrack.
 
@@ -142,6 +142,6 @@ Distributed under the GPLv3 License. See `LICENSE` for more information.
 
 ---
 
-*v2.4.3*
+*v2.4.4*
 
-*Tue, 14 Jul 2026 09:19:40 GMT*
+*Tue, 14 Jul 2026 09:34:56 GMT*
